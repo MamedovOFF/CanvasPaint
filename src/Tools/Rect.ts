@@ -1,10 +1,10 @@
 import Tool from './Tool'
 
 export default class Rect extends Tool {
-  private mouseDown: boolean | undefined
-  private startX = 0
-  private startY = 0
-  private saved: string | undefined
+  protected mouseDown = false
+  protected startX = 0
+  protected startY = 0
+  protected saved: string | undefined
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas)
@@ -20,15 +20,17 @@ export default class Rect extends Tool {
   mouseUpHandler() {
     this.mouseDown = false
   }
-  mouseDownHandler(e: any): void {
-    this.mouseDown = true
-    this.ctx?.beginPath()
-    this.startX = e.pageX - e.target.offsetLeft
-    this.startY = e.pageY - e.target.offsetTop
-    this.saved = this.canvas.toDataURL()
+  mouseDownHandler(e: MouseEvent): void {
+    if (e.target instanceof HTMLCanvasElement) {
+      this.mouseDown = true
+      this.ctx?.beginPath()
+      this.startX = e.pageX - e.target?.offsetLeft
+      this.startY = e.pageY - e.target?.offsetTop
+      this.saved = this.canvas.toDataURL()
+    }
   }
-  mouseMoveHandler(e: any): void {
-    if (this.mouseDown) {
+  mouseMoveHandler(e: MouseEvent): void {
+    if (this.mouseDown && e.target instanceof HTMLCanvasElement) {
       const height = e.pageX - e.target.offsetLeft - this.startX
       const width = e.pageY - e.target.offsetTop - this.startY
       this.draw(this.startX, this.startY, height, width)
@@ -36,7 +38,7 @@ export default class Rect extends Tool {
   }
   draw(x: number, y: number, h: number, w: number): void {
     const img = new Image()
-    img.src = this.saved as string
+    img.src = this.saved ?? ''
     img.onload = () => {
       this.ctx?.clearRect(0, 0, this.canvas.width, this.canvas.height)
       this.ctx?.drawImage(img, 0, 0, this.canvas.width, this.canvas.height)

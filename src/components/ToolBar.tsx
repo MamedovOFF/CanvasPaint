@@ -12,6 +12,8 @@ import canvasState from '../store/canvasState'
 import Brush from '../Tools/Brush'
 import Rect from '../Tools/Rect'
 import Eraser from '../Tools/Eraser'
+import Circle from '../Tools/Circle'
+import Line from '../Tools/Line'
 
 const ToolBar = () => {
   return (
@@ -27,13 +29,21 @@ const ToolBar = () => {
           alt='Rect'
           onClick={() => toolState.setTool(new Rect(canvasState.canvas as HTMLCanvasElement))}
         />
-        <Button img={CircleImg} alt='Circle' />
+        <Button
+          img={CircleImg}
+          alt='Circle'
+          onClick={() => toolState.setTool(new Circle(canvasState.canvas as HTMLCanvasElement))}
+        />
         <Button
           img={EraserImg}
           alt='Eraser'
           onClick={() => toolState.setTool(new Eraser(canvasState.canvas as HTMLCanvasElement))}
         />
-        <Button img={LineImg} alt='Line' />
+        <Button
+          img={LineImg}
+          alt='Line'
+          onClick={() => toolState.setTool(new Line(canvasState.canvas as HTMLCanvasElement))}
+        />
         <input type='color' />
       </div>
       <div className='tools'>

@@ -16,13 +16,15 @@ export default class Brush extends Tool {
   mouseUpHandler() {
     this.mouseDown = false
   }
-  mouseDownHandler(e: any): void {
-    this.mouseDown = true
-    this.ctx?.beginPath()
-    this.ctx?.moveTo(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop)
+  mouseDownHandler(e: MouseEvent): void {
+    if (e.target instanceof HTMLCanvasElement) {
+      this.mouseDown = true
+      this.ctx?.beginPath()
+      this.ctx?.moveTo(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop)
+    }
   }
-  mouseMoveHandler(e: any): void {
-    if (this.mouseDown) {
+  mouseMoveHandler(e: MouseEvent): void {
+    if (this.mouseDown && e.target instanceof HTMLCanvasElement) {
       this.draw(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop)
     }
   }
