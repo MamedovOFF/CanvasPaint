@@ -6,6 +6,12 @@
   justify-content: space-between;
   &_setting {
     margin-top: 4px;
+    &__tools {
+      display: flex;
+      align-items: center;
+      margin: 0 10px;
+      gap: 5px;
+    }
   }
   & .tools {
     margin: 0 10px;

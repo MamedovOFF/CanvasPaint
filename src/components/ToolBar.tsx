@@ -44,7 +44,13 @@ const ToolBar = () => {
           alt='Line'
           onClick={() => toolState.setTool(new Line(canvasState.canvas as HTMLCanvasElement))}
         />
-        <input type='color' />
+        <input
+          type='color'
+          onChange={(event) => {
+            toolState.setColorFill(event.target.value)
+            toolState.setColorStroke(event.target.value)
+          }}
+        />
       </div>
       <div className='tools'>
         <Button img={UndoImg} alt='Undo' />
